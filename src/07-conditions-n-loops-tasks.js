@@ -346,8 +346,20 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const bracketsArr = ['[', ']', '{', '}', '(', ')', '<', '>'];
+  const result = [];
+  for (let i = 0; i < str.length; i += 1) {
+    const index = bracketsArr.indexOf(str[i]);
+    if (index % 2 === 0) {
+      result.push(str[i]);
+    } else if (result[result.length - 1] === bracketsArr[index - 1]) {
+      result.pop();
+    } else {
+      return false;
+    }
+  }
+  return !result.length;
 }
 
 
@@ -388,8 +400,17 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let result = '';
+  for (let i = 0; i < pathes[0].length; i += 1) {
+    const currentEl = pathes[0][i];
+    if (pathes.every((path) => path[i] === currentEl)) {
+      result += currentEl;
+    } else {
+      return result.slice(0, result.lastIndexOf('/') + 1);
+    }
+  }
+  return result;
 }
 
 
